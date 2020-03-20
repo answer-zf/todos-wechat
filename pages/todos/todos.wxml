@@ -1,0 +1,25 @@
+<!-- pages/todos/todos.wxml -->
+<view class="container">
+  <view class="search">
+    <image src="../../images/plus.png" bindtap="addHandle" />
+    <input type="text" placeholder="Anything here..." value="{{input}}" bindinput="inputChangeHandle" bindconfirm="addHandle" />
+  </view>
+  <block wx:if="{{ todos.length }}">
+    <view class="todos">
+      <view class="item{{ item.completed ? ' completed' : '' }}" wx:for="{{ todos }}" wx:key="index" bindtap="editHandle" data-index="{{ index }}">
+        <icon type="{{ item.completed ? 'success' : 'circle' }}"></icon>
+        <text>{{ item.name }}</text>
+        <!-- 阻止冒泡 -->
+        <icon type="clear" size="16" catchtap="deleteHandle" data-index="{{ index }}"></icon>
+      </view>
+    </view>
+    <view class="footer">
+      <text bindtap="toggleAllHandle">toggle all</text>
+      <text wx:if="{{ leftCount }}">{{ leftCount }} {{leftCount > 1 ? 'items' : 'item'}} left</text>
+      <text bindtap="clearHandle">Clear completed</text>
+    </view>
+  </block>
+  <view wx:else class="viewCompleted">
+    <text>ALL COMPLETE</text>
+  </view>
+</view>
